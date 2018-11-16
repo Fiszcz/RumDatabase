@@ -16,6 +16,6 @@ public class Producent {
 
     String country;
 
-    Integer dateFounding;
+    Integer yearFounding;
 
 }

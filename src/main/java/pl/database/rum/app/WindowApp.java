@@ -18,6 +18,15 @@ public class WindowApp extends JFrame {
         add(new JButton("Pokaż listę rumów"));
         add(new JButton("Pokaż listę producentów"));
 
+        add(new TableView());
+
+//        SwingTableExample newContentPane = new SwingTableExample();
+//        18
+//        newContentPane.setOpaque(true); //content panes must be opaque
+//        19
+//        frame.setContentPane(newContentPane);
+
+
         setVisible(true);
     }
 }
