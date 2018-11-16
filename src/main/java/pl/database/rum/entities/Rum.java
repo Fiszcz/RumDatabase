@@ -26,4 +26,7 @@ public class Rum {
 
     Integer minimalAge;
 
+    @ManyToOne
+    private Producent project;
+
 }
