@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "rums")
+@Table(name="rums")
 public class Rum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,6 @@ public class Rum {
 
     String name;
 
-    @Enumerated(EnumType.STRING)
     Integer alcoholPercentage;
 
     @Enumerated(EnumType.STRING)
@@ -28,5 +27,4 @@ public class Rum {
 
     @ManyToOne
     private Producent producent;
-
 }

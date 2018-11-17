@@ -12,6 +12,8 @@ public class HibernateUtil {
 
     static {
         Configuration conf = new Configuration().configure();
+        conf.addAnnotatedClass(pl.database.rum.entities.Rum.class);
+        conf.addAnnotatedClass(pl.database.rum.entities.Producent.class);
         serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         try {
             sessionFactory = conf.buildSessionFactory(serviceRegistry);

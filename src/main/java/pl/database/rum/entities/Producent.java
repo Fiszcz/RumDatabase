@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "producents")
+@Table(name = "producen")
 public class Producent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +17,4 @@ public class Producent {
     String country;
 
     Integer yearFounding;
-
 }
