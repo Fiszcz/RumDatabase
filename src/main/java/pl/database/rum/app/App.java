@@ -1,13 +1,17 @@
 package pl.database.rum.app;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import pl.database.rum.init.HibernateUtil;
+
 import java.awt.*;
 
 public class App {
 
 //    public static void main(String[] args) {
 ////
-////        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-////        Session session = sessionFactory.openSession();
+//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        Session session = sessionFactory.openSession();
 ////
 ////        List<Student> students = session.createQuery("from Student").list();
 ////
@@ -19,6 +23,9 @@ public class App {
 ////    }
 
     public static void main(String[] args) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

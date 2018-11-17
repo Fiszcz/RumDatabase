@@ -36,6 +36,9 @@ public class RumsTab extends JPanel {
                 1); //step
         JSpinner minimalAgeSpinner = new JSpinner(minimalAgeSpinnerValue);
 
+        JComboBox producentsCombo = new JComboBox();
+        producentsCombo.setPreferredSize(new Dimension(130, 20));
+
         JPanel namePanel = new JPanel(new BorderLayout());
         namePanel.add(nameInput);
         nameLabel = new JLabel("Name");
@@ -72,6 +75,12 @@ public class RumsTab extends JPanel {
         ratingLabel.setLabelFor(ratingSpinner);
         ratingPanel.add(ratingLabel, BorderLayout.NORTH);
 
+        JPanel producentPanel = new JPanel(new BorderLayout());
+        producentPanel.add(producentsCombo);
+        producentLabel = new JLabel("Producent");
+        producentLabel.setLabelFor(ratingSpinner);
+        producentPanel.add(producentLabel, BorderLayout.NORTH);
+
         JPanel panelForm = new JPanel();
 
         panelForm.add(namePanel);
@@ -80,6 +89,7 @@ public class RumsTab extends JPanel {
         panelForm.add(finishPanel);
         panelForm.add(minimalAgePanel);
         panelForm.add(ratingPanel);
+        panelForm.add(producentPanel);
         JButton addButton = new JButton("Add new rum");
         addButton.setPreferredSize(new Dimension(175, 40));
         panelForm.add(addButton);

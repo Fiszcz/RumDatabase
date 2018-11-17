@@ -1,6 +1,5 @@
 package pl.database.rum.app;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 class TableRums extends AbstractTableModel {
