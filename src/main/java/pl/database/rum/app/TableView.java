@@ -6,10 +6,14 @@ import java.awt.*;
 public class TableView extends JPanel {
     private boolean DEBUG = false;
 
-    public TableView() {
+    public TableView(String typeOfTable) {
         super(new GridLayout(1, 0));
 
-        JTable table = new JTable(new TableRums());
+        JTable table;
+        if (typeOfTable == "RUMS")
+            table = new JTable(new TableRums());
+        else
+            table = new JTable(new TableProducents());
         table.setPreferredScrollableViewportSize(new Dimension(800, 500));
         table.setFillsViewportHeight(true);
 

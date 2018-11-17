@@ -8,24 +8,17 @@ public class WindowApp extends JFrame {
     public WindowApp() {
         super("Hello World");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 500);
-        setLocation(50,50);
+        setSize(1200, 1000);
+        setLocation(300,0);
 
         setLayout(new FlowLayout());
 
-        add(new JButton("Dodaj nowy rum"));
-        add(new JButton("Dodaj nowego producenta"));
-        add(new JButton("Pokaż listę rumów"));
-        add(new JButton("Pokaż listę producentów"));
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.setBounds(0,0,1000,1000);
+        tabs.add("Rums", new RumsTab());
+        tabs.add("Producents", new ProducentsTab());
 
-        add(new TableView());
-
-//        SwingTableExample newContentPane = new SwingTableExample();
-//        18
-//        newContentPane.setOpaque(true); //content panes must be opaque
-//        19
-//        frame.setContentPane(newContentPane);
-
+        add(tabs);
 
         setVisible(true);
     }

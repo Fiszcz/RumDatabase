@@ -1,5 +1,6 @@
 package pl.database.rum.app;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 class TableRums extends AbstractTableModel {
@@ -11,24 +12,46 @@ class TableRums extends AbstractTableModel {
             "Finish",
             "Rating",
             "Minimal Age",
-            "Producent"};
+            "Producent",
+            "Delete"};
 
     Object[][] data = {
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum"},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
     };
 
     public int getColumnCount() {

@@ -7,10 +7,15 @@ class TableProducents extends AbstractTableModel {
     String[] columnNames = {"Id",
             "Name",
             "Country",
-            "Year Founding"};
+            "Year Founding",
+            "Delete"};
 
     Object[][] data = {
-            {1, "B.Tech", "Poland", 1544},
+            {1, "B.Tech", "Poland", 1544, false},
+            {1, "B.Tech", "Poland", 1544, false},
+            {1, "B.Tech", "Poland", 1544, false},
+            {1, "B.Tech", "Poland", 1544, false},
+            {1, "B.Tech", "Poland", 1544, false},
     };
 
     public int getColumnCount() {
