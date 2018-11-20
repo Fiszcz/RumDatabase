@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -70,9 +72,11 @@ class TableRums extends AbstractTableModel {
 
     public List<Rum> getAllRums(){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        final Session session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<Rum> rums = session.createCriteria(Rum.class).list();
+        session.getTransaction().commit();
+        session.close();
         return rums;
 
     }

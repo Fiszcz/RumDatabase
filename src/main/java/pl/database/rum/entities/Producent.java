@@ -18,9 +18,21 @@ public class Producent {
 
     Integer yearFounding;
 
+    public Producent () {}
+
     public Producent(String name, String country, Integer yearFounding) {
         this.name = name;
         this.country = country;
         this.yearFounding = yearFounding;
+    }
+
+    @Override
+    public String toString() {
+        return "Producent{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", yearFounding=" + yearFounding +
+                '}';
     }
 }

@@ -49,6 +49,7 @@ public class Rum {
                 ", rating=" + rating +
                 ", finish='" + finish + '\'' +
                 ", minimalAge=" + minimalAge +
+                ", producent=" + producent +
                 '}';
     }
 }

@@ -1,6 +1,14 @@
 package pl.database.rum.app;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import pl.database.rum.entities.Producent;
+
+import pl.database.rum.init.HibernateUtil;
+
+
 import javax.swing.table.AbstractTableModel;
+import java.util.List;
 
 class TableProducents extends AbstractTableModel {
 
@@ -10,6 +18,8 @@ class TableProducents extends AbstractTableModel {
             "Year Founding",
             "Delete"};
 
+    List<Producent> producents;
+
     Object[][] data = {
             {1, "B.Tech", "Poland", 1544, false},
             {2, "B.Nech", "Poland", 1544, false},
@@ -17,6 +27,23 @@ class TableProducents extends AbstractTableModel {
             {4, "B.Fech", "Poland", 1544, false},
             {5, "B.Gech", "Poland", 1544, false},
     };
+
+    public TableProducents(){
+        this.producents = getAllProducents();
+        for (Producent producent : this.producents){
+            System.out.println(producent.toString());
+        }
+    }
+
+    public List<Producent> getAllProducents() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Producent> producents = session.createCriteria(Producent.class).list();
+        session.getTransaction().commit();
+        session.close();
+        return producents;
+    }
 
     public int getColumnCount() {
         return columnNames.length;
