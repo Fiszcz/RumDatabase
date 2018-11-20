@@ -7,8 +7,6 @@ import org.hibernate.criterion.Restrictions;
 import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -25,37 +23,43 @@ class TableRums extends AbstractTableModel {
             "Delete",
             "Update"};
 
-    List<Rum> rums;
-    List<Rum> rum;
+    Object[][] data;
 
-    Object[][] data = {
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
-    };
+
 
     public TableRums(){
-        this.rums = getAllRums();
-        for (Rum rum : this.rums){
-            System.out.println(rum.toString());
-        }
-//        this.rums = getRumById(3);
-//        System.out.println(this.rum.get(0).toString());
+        this.data = getAllRums();
     }
 
-    public List<Rum> getAllRums(){
+    public Object[][] getAllRums(){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<Rum> rums = session.createCriteria(Rum.class).list();
         session.getTransaction().commit();
         session.close();
-        return rums;
+
+        Object[][] rumArray = convertRumListTo2DArray(rums);
+        return rumArray;
     }
+
+    public Object[][] convertRumListTo2DArray(List<Rum> rumList){
+        Object[][] rumArray = new Object[rumList.size()][10];
+        for (int i = 0; i < rumList.size(); i++){
+            rumArray[i][0] = rumList.get(i).getId();
+            rumArray[i][1] = rumList.get(i).getName() != null ? rumList.get(i).getName() : "";
+            rumArray[i][2] = rumList.get(i).getAlcoholPercentage()!= null ? rumList.get(i).getAlcoholPercentage() : 0;
+            rumArray[i][3] = rumList.get(i).getRumType()!= null ? rumList.get(i).getRumType() : "";
+            rumArray[i][4] = rumList.get(i).getFinish()!= null ? rumList.get(i).getFinish() : "";
+            rumArray[i][5] = rumList.get(i).getRating()!= null ? rumList.get(i).getRating() : 0;
+            rumArray[i][6] = rumList.get(i).getMinimalAge()!= null ? rumList.get(i).getMinimalAge() : 0;
+            rumArray[i][7] = rumList.get(i).getProducent()!= null ? rumList.get(i).getProducent() : 0;
+            rumArray[i][8] = false;
+            rumArray[i][9] = false;
+        }
+        return rumArray;
+    }
+
 
     public List<Rum> getRumById(long id){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
