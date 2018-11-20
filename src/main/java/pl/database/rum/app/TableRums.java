@@ -142,10 +142,10 @@ class TableRums extends AbstractTableModel {
         }
         else if (col == 8) {
             removeRumFromDatabase((Long)data[row][0]);
-            getAllRums();
+            this.data = getAllRums();
         } else
             data[row][col] = value;
-        fireTableCellUpdated(row, col);
+        fireTableDataChanged();
     }
 
     private void removeRumFromDatabase(Long id){
