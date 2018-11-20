@@ -13,11 +13,14 @@ import java.awt.event.ActionListener;
 
 public class RumsTab extends JPanel {
 
+    SessionFactory sessionFactory;
+    Session session;
+
     RumsTab() {
         super(new BorderLayout());
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        final Session session = sessionFactory.openSession();
+        sessionFactory = HibernateUtil.getSessionFactory();
+        session = sessionFactory.openSession();
 
         JLabel nameLabel, alcoholPercentageLabel, rumTypeLabel, ratingLabel, finishLabel, minimalAgeLabel, producentLabel;
 
@@ -103,7 +106,6 @@ public class RumsTab extends JPanel {
         addButton.setPreferredSize(new Dimension(175, 40));
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                session.beginTransaction();
                 String name = nameInput.getText();
                 String finisz = finishInput.getText();
                 String rumTypeValue = rumType.getText();
@@ -112,16 +114,20 @@ public class RumsTab extends JPanel {
                 Double rating = (Double) ratingSpinner.getValue();
                 Producent producent = new Producent("Elo", "Elo", 20);
 
-                Rum exampleProducent = new Rum(name, percentage, rumTypeValue, rating, finisz, minimalAge, producent);
-                session.save(exampleProducent);
-                session.getTransaction().commit();
-                session.close();
+                Rum rum = new Rum(name, percentage, rumTypeValue, rating, finisz, minimalAge, producent);
+                addNewRumToDatabase(rum);
             }
         });
         panelForm.add(addButton);
 
         add(new TableView("RUMS"));
         add(panelForm, BorderLayout.NORTH);
+    }
+
+    private void addNewRumToDatabase(Rum rum){
+        session.beginTransaction();
+        session.save(rum);
+        session.close();
     }
 
 }
