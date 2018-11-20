@@ -1,9 +1,12 @@
 package pl.database.rum.app;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import pl.database.rum.entities.Producent;
 
+import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
 
@@ -45,6 +48,16 @@ class TableProducents extends AbstractTableModel {
         return producents;
     }
 
+    public List<Producent> getProducentById(long id){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Criteria crit = session.createCriteria(Producent.class);
+        crit.add(Restrictions.eq("id", id));
+        List<Producent> producents = crit.list();
+        return producents;
+    }
+
     public int getColumnCount() {
         return columnNames.length;
     }
@@ -80,9 +93,4 @@ class TableProducents extends AbstractTableModel {
         data[row][col] = value;
         fireTableCellUpdated(row, col);
     }
-
-//    public void addNewProducer(){
-//        data[data.length].push()
-//    }
-
 }

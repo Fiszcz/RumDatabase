@@ -1,7 +1,9 @@
 package pl.database.rum.app;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
@@ -20,47 +22,20 @@ class TableRums extends AbstractTableModel {
             "Rating",
             "Minimal Age",
             "Producent",
-            "Delete"};
+            "Delete",
+            "Update"};
 
     List<Rum> rums;
+    List<Rum> rum;
 
     Object[][] data = {
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
-            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
+            {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
     };
 
     public TableRums(){
@@ -68,6 +43,8 @@ class TableRums extends AbstractTableModel {
         for (Rum rum : this.rums){
             System.out.println(rum.toString());
         }
+//        this.rums = getRumById(3);
+//        System.out.println(this.rum.get(0).toString());
     }
 
     public List<Rum> getAllRums(){
@@ -78,7 +55,16 @@ class TableRums extends AbstractTableModel {
         session.getTransaction().commit();
         session.close();
         return rums;
+    }
 
+    public List<Rum> getRumById(long id){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Criteria crit = session.createCriteria(Rum.class);
+        crit.add(Restrictions.eq("id", id));
+        List<Rum> rums = crit.list();
+        return rums;
     }
 
     public int getColumnCount() {
@@ -116,6 +102,5 @@ class TableRums extends AbstractTableModel {
         data[row][col] = value;
         fireTableCellUpdated(row, col);
     }
-
 
 }
