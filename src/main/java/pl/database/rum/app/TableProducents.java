@@ -19,35 +19,42 @@ class TableProducents extends AbstractTableModel {
             "Name",
             "Country",
             "Year Founding",
-            "Delete"};
+            "Delete",
+            "Update"};
 
     List<Producent> producents;
 
-    Object[][] data = {
-            {1, "B.Tech", "Poland", 1544, false},
-            {2, "B.Nech", "Poland", 1544, false},
-            {3, "B.Bech", "Poland", 1544, false},
-            {4, "B.Fech", "Poland", 1544, false},
-            {5, "B.Gech", "Poland", 1544, false},
-    };
+    Object[][] data;
 
     public TableProducents(){
-        this.producents = getAllProducents();
-        for (Producent producent : this.producents){
-            System.out.println(producent.toString());
-        }
+        this.data = getAllProducents();
     }
 
-    public List<Producent> getAllProducents() {
+    public Object[][] getAllProducents() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<Producent> producents = session.createCriteria(Producent.class).list();
         session.getTransaction().commit();
         session.close();
-        return producents;
+        
+        Object[][] producentArray = convertProducentListTo2DArray(producents);
+        return producentArray;
     }
 
+    public Object[][] convertProducentListTo2DArray(List<Producent> producentList){
+        Object[][] rumArray = new Object[producentList.size()][10];
+        for (int i = 0; i < producentList.size(); i++){
+            rumArray[i][0] = producentList.get(i).getId();
+            rumArray[i][1] = producentList.get(i).getName() != null ? producentList.get(i).getName() : "";
+            rumArray[i][2] = producentList.get(i).getCountry()!= null ? producentList.get(i).getCountry() : 0;
+            rumArray[i][3] = producentList.get(i).getYearFounding()!= null ? producentList.get(i).getYearFounding() : "";
+            rumArray[i][4] = false;
+            rumArray[i][5] = false;
+        }
+        return rumArray;
+    }
+    
     public List<Producent> getProducentById(long id){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
