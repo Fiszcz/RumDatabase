@@ -1,14 +1,24 @@
 package pl.database.rum.app;
 
-import pl.database.rum.entities.TypeRum;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import pl.database.rum.entities.Producent;
+import pl.database.rum.entities.Rum;
+import pl.database.rum.init.HibernateUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RumsTab extends JPanel {
 
     RumsTab() {
         super(new BorderLayout());
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
         JLabel nameLabel, alcoholPercentageLabel, rumTypeLabel, ratingLabel, finishLabel, minimalAgeLabel, producentLabel;
 
@@ -20,7 +30,7 @@ public class RumsTab extends JPanel {
                 1); //step
         JSpinner alcoholPercentageSpinner = new JSpinner(alcoholPercentageSpinnerValue);
 
-        JComboBox rumTypeCombo = new JComboBox(TypeRum.values());
+        JTextField rumType = new JTextField("", 15);
 
         SpinnerModel ratingSpinnerValue = new SpinnerNumberModel(0, //initial value
                 0, //minimum value
@@ -52,9 +62,9 @@ public class RumsTab extends JPanel {
         alcoholPercentagePanel.add(alcoholPercentageLabel, BorderLayout.NORTH);
 
         JPanel rumTypePanel = new JPanel(new BorderLayout());
-        rumTypePanel.add(rumTypeCombo);
+        rumTypePanel.add(rumType);
         rumTypeLabel = new JLabel("Rum type");
-        rumTypeLabel.setLabelFor(rumTypeCombo);
+        rumTypeLabel.setLabelFor(rumType);
         rumTypePanel.add(rumTypeLabel, BorderLayout.NORTH);
 
         JPanel finishPanel = new JPanel(new BorderLayout());
@@ -92,9 +102,26 @@ public class RumsTab extends JPanel {
         panelForm.add(producentPanel);
         JButton addButton = new JButton("Add new rum");
         addButton.setPreferredSize(new Dimension(175, 40));
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String name = nameInput.getText();
+                String finisz = finishInput.getText();
+                String rumTypeValue = rumType.getText();
+                Integer percentage = (Integer) alcoholPercentageSpinner.getValue();
+                Integer minimalAge = (Integer) minimalAgeSpinner.getValue();
+                Double rating = (Double) ratingSpinner.getValue();
+                Producent producent = new Producent();
+
+                Rum exampleProducent = new Rum(name, percentage, rumTypeValue, rating, finisz, minimalAge, producent);
+                session.save(exampleProducent);
+                session.getTransaction().commit();
+                session.close();
+            }
+        });
         panelForm.add(addButton);
 
         add(new TableView("RUMS"));
         add(panelForm, BorderLayout.NORTH);
     }
+
 }

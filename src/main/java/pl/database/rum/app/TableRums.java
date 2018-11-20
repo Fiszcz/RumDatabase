@@ -73,7 +73,6 @@ class TableRums extends AbstractTableModel {
         return getValueAt(0, c).getClass();
     }
 
-
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
