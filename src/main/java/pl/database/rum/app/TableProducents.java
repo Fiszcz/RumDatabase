@@ -12,10 +12,10 @@ class TableProducents extends AbstractTableModel {
 
     Object[][] data = {
             {1, "B.Tech", "Poland", 1544, false},
-            {1, "B.Tech", "Poland", 1544, false},
-            {1, "B.Tech", "Poland", 1544, false},
-            {1, "B.Tech", "Poland", 1544, false},
-            {1, "B.Tech", "Poland", 1544, false},
+            {2, "B.Nech", "Poland", 1544, false},
+            {3, "B.Bech", "Poland", 1544, false},
+            {4, "B.Fech", "Poland", 1544, false},
+            {5, "B.Gech", "Poland", 1544, false},
     };
 
     public int getColumnCount() {
@@ -54,5 +54,8 @@ class TableProducents extends AbstractTableModel {
         fireTableCellUpdated(row, col);
     }
 
+//    public void addNewProducer(){
+//        data[data.length].push()
+//    }
 
 }

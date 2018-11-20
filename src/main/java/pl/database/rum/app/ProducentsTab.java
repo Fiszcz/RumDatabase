@@ -24,15 +24,15 @@ public class ProducentsTab extends JPanel {
 
         JLabel nameLabel, countryLabel, yearFoundingLabel;
 
-        JTextField nameInput = new JTextField("", 15);
+        final JTextField nameInput = new JTextField("", 15);
 
-        JTextField countryInput = new JTextField("", 10);
+        final JTextField countryInput = new JTextField("", 10);
 
         SpinnerModel yearFoundingSpinnerValue = new SpinnerNumberModel(1900, //initial value
                 0, //minimum value
                 Calendar.getInstance().get(Calendar.YEAR), //maximum value
                 1); //step
-        JSpinner yearFoundingSpinner = new JSpinner(yearFoundingSpinnerValue);
+        final JSpinner yearFoundingSpinner = new JSpinner(yearFoundingSpinnerValue);
 
         JPanel namePanel = new JPanel(new BorderLayout());
         namePanel.add(nameInput);
@@ -58,6 +58,12 @@ public class ProducentsTab extends JPanel {
         panelForm.add(countryPanel);
         panelForm.add(yearFoundingPanel);
         JButton addButton = new JButton("Add new producent");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println(e);
+            }
+        });
         addButton.setPreferredSize(new Dimension(175, 40));
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
