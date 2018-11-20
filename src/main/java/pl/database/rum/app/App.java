@@ -14,6 +14,7 @@ public class App {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+
         Producent exampleProducent = new Producent();
         session.save(exampleProducent);
         session.getTransaction().commit();
