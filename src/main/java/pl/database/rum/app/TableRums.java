@@ -7,12 +7,13 @@ import org.hibernate.criterion.Restrictions;
 import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 class TableRums extends AbstractTableModel {
+
+    SessionFactory sessionFactory;
+    Session session;
 
     String[] columnNames = {"Id",
             "Name",
@@ -38,32 +39,30 @@ class TableRums extends AbstractTableModel {
             {1, "B.Tech", 33, "White", "Wooden", 6.2, 53, "Scotland Rum", false, false},
     };
 
-    public TableRums(){
+    public TableRums() {
+        sessionFactory = HibernateUtil.getSessionFactory();
+        session = sessionFactory.openSession();
         this.rums = getAllRums();
-        for (Rum rum : this.rums){
+        for (Rum rum : this.rums) {
             System.out.println(rum.toString());
         }
 //        this.rums = getRumById(3);
 //        System.out.println(this.rum.get(0).toString());
     }
 
-    public List<Rum> getAllRums(){
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
+    public List<Rum> getAllRums() {
         session.beginTransaction();
         List<Rum> rums = session.createCriteria(Rum.class).list();
-        session.getTransaction().commit();
         session.close();
         return rums;
     }
 
-    public List<Rum> getRumById(long id){
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
+    public List<Rum> getRumById(long id) {
         session.beginTransaction();
         Criteria crit = session.createCriteria(Rum.class);
         crit.add(Restrictions.eq("id", id));
         List<Rum> rums = crit.list();
+        session.close();
         return rums;
     }
 
@@ -99,8 +98,25 @@ class TableRums extends AbstractTableModel {
     }
 
     public void setValueAt(Object value, int row, int col) {
-        data[row][col] = value;
+        if (col == 8) {
+            removeRumFromDatabase((Integer)data[row][0]);
+        } else
+            data[row][col] = value;
         fireTableCellUpdated(row, col);
+    }
+
+    private void removeRumFromDatabase(Integer id){
+        Long idRum = id.longValue();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session= sessionFactory.openSession();
+        session.beginTransaction();
+        for(Rum rum : rums) {
+            if(rum.getId().equals(idRum)) {
+                session.delete(rum);
+            }
+        }
+        session.getTransaction().commit();
+        session.close();
     }
 
 }
