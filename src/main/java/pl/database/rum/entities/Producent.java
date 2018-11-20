@@ -17,4 +17,10 @@ public class Producent {
     String country;
 
     Integer yearFounding;
+
+    public Producent(String name, String country, Integer yearFounding) {
+        this.name = name;
+        this.country = country;
+        this.yearFounding = yearFounding;
+    }
 }
