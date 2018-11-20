@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import pl.database.rum.entities.Producent;
 import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
@@ -107,10 +108,13 @@ class TableRums extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
         if (col == 8) {
             removeRumFromDatabase((Long)data[row][0]);
-            getAllRums();
-        } else
+            this.data = getAllRums();
+        } else if (col == 9) {
+            updateRumById((Long)data[row][0], row);
+        } else {
             data[row][col] = value;
-        fireTableCellUpdated(row, col);
+            fireTableCellUpdated(row, col);
+        }
     }
 
     private void removeRumFromDatabase(Long id){
@@ -122,6 +126,18 @@ class TableRums extends AbstractTableModel {
                 session.delete(rum);
             }
         }
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    private void updateRumById(Long id, int row){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Rum rum = new Rum(data[row][1].toString(), (Integer)data[row][2], data[row][3].toString(),
+        (Double)data[row][5], data[row][4].toString(), (Integer)data[row][6], null);
+        rum.setId(id);
+        session.update(rum);
         session.getTransaction().commit();
         session.close();
     }
