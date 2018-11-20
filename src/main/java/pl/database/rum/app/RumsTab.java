@@ -1,40 +1,49 @@
 package pl.database.rum.app;
 
-import pl.database.rum.entities.TypeRum;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import pl.database.rum.entities.Producent;
+import pl.database.rum.entities.Rum;
+import pl.database.rum.init.HibernateUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RumsTab extends JPanel {
 
     RumsTab() {
         super(new BorderLayout());
 
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        final Session session = sessionFactory.openSession();
+
         JLabel nameLabel, alcoholPercentageLabel, rumTypeLabel, ratingLabel, finishLabel, minimalAgeLabel, producentLabel;
 
-        JTextField nameInput = new JTextField("", 15);
+        final JTextField nameInput = new JTextField("", 15);
 
         SpinnerModel alcoholPercentageSpinnerValue = new SpinnerNumberModel(0, //initial value
                 0, //minimum value
                 100, //maximum value
                 1); //step
-        JSpinner alcoholPercentageSpinner = new JSpinner(alcoholPercentageSpinnerValue);
+        final JSpinner alcoholPercentageSpinner = new JSpinner(alcoholPercentageSpinnerValue);
 
-        JComboBox rumTypeCombo = new JComboBox(TypeRum.values());
+        final JTextField rumType = new JTextField("", 15);
 
         SpinnerModel ratingSpinnerValue = new SpinnerNumberModel(0, //initial value
                 0, //minimum value
                 10, //maximum value
                 0.1); //step
-        JSpinner ratingSpinner = new JSpinner(ratingSpinnerValue);
+        final JSpinner ratingSpinner = new JSpinner(ratingSpinnerValue);
 
-        JTextField finishInput = new JTextField("", 27);
+        final JTextField finishInput = new JTextField("", 27);
 
         SpinnerModel minimalAgeSpinnerValue = new SpinnerNumberModel(0, //initial value
                 0, //minimum value
                 100000, //maximum value
                 1); //step
-        JSpinner minimalAgeSpinner = new JSpinner(minimalAgeSpinnerValue);
+        final JSpinner minimalAgeSpinner = new JSpinner(minimalAgeSpinnerValue);
 
         JComboBox producentsCombo = new JComboBox();
         producentsCombo.setPreferredSize(new Dimension(130, 20));
@@ -52,9 +61,9 @@ public class RumsTab extends JPanel {
         alcoholPercentagePanel.add(alcoholPercentageLabel, BorderLayout.NORTH);
 
         JPanel rumTypePanel = new JPanel(new BorderLayout());
-        rumTypePanel.add(rumTypeCombo);
+        rumTypePanel.add(rumType);
         rumTypeLabel = new JLabel("Rum type");
-        rumTypeLabel.setLabelFor(rumTypeCombo);
+        rumTypeLabel.setLabelFor(rumType);
         rumTypePanel.add(rumTypeLabel, BorderLayout.NORTH);
 
         JPanel finishPanel = new JPanel(new BorderLayout());
@@ -92,9 +101,27 @@ public class RumsTab extends JPanel {
         panelForm.add(producentPanel);
         JButton addButton = new JButton("Add new rum");
         addButton.setPreferredSize(new Dimension(175, 40));
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                session.beginTransaction();
+                String name = nameInput.getText();
+                String finisz = finishInput.getText();
+                String rumTypeValue = rumType.getText();
+                Integer percentage = (Integer) alcoholPercentageSpinner.getValue();
+                Integer minimalAge = (Integer) minimalAgeSpinner.getValue();
+                Double rating = (Double) ratingSpinner.getValue();
+                Producent producent = new Producent("Elo", "Elo", 20);
+
+                Rum exampleProducent = new Rum(name, percentage, rumTypeValue, rating, finisz, minimalAge, producent);
+                session.save(exampleProducent);
+                session.getTransaction().commit();
+                session.close();
+            }
+        });
         panelForm.add(addButton);
 
         add(new TableView("RUMS"));
         add(panelForm, BorderLayout.NORTH);
     }
+
 }

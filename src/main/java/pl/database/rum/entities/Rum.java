@@ -16,10 +16,9 @@ public class Rum {
 
     Integer alcoholPercentage;
 
-    @Enumerated(EnumType.STRING)
-    TypeRum rumType;
+    String rumType;
 
-    Float rating;
+    Double rating;
 
     String finish;
 
@@ -28,8 +27,13 @@ public class Rum {
     @ManyToOne
     private Producent producent;
 
-    @Override
-    public String toString() {
-        return this.id + " " + this.name + " " + this.alcoholPercentage + " " + this.rumType;
+    public Rum(String name, Integer alcoholPercentage, String rumType, Double rating, String finish, Integer minimalAge, Producent producent) {
+        this.name = name;
+        this.alcoholPercentage = alcoholPercentage;
+        this.rumType = rumType;
+        this.rating = rating;
+        this.finish = finish;
+        this.minimalAge = minimalAge;
+        this.producent = producent;
     }
 }
