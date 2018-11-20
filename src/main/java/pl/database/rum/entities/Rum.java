@@ -27,4 +27,9 @@ public class Rum {
 
     @ManyToOne
     private Producent producent;
+
+    @Override
+    public String toString() {
+        return this.id + " " + this.name + " " + this.alcoholPercentage + " " + this.rumType;
+    }
 }

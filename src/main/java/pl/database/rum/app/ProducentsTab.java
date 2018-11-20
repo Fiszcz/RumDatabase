@@ -2,6 +2,8 @@ package pl.database.rum.app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 public class ProducentsTab extends JPanel {
@@ -45,6 +47,12 @@ public class ProducentsTab extends JPanel {
         panelForm.add(countryPanel);
         panelForm.add(yearFoundingPanel);
         JButton addButton = new JButton("Add new producent");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println(e);
+            }
+        });
         addButton.setPreferredSize(new Dimension(175, 40));
         panelForm.add(addButton);
 
