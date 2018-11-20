@@ -17,34 +17,34 @@ public class RumsTab extends JPanel {
         super(new BorderLayout());
 
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.beginTransaction();
 
         JLabel nameLabel, alcoholPercentageLabel, rumTypeLabel, ratingLabel, finishLabel, minimalAgeLabel, producentLabel;
 
-        JTextField nameInput = new JTextField("", 15);
+        final JTextField nameInput = new JTextField("", 15);
 
         SpinnerModel alcoholPercentageSpinnerValue = new SpinnerNumberModel(0, //initial value
                 0, //minimum value
                 100, //maximum value
                 1); //step
-        JSpinner alcoholPercentageSpinner = new JSpinner(alcoholPercentageSpinnerValue);
+        final JSpinner alcoholPercentageSpinner = new JSpinner(alcoholPercentageSpinnerValue);
 
-        JTextField rumType = new JTextField("", 15);
+        final JTextField rumType = new JTextField("", 15);
 
         SpinnerModel ratingSpinnerValue = new SpinnerNumberModel(0, //initial value
                 0, //minimum value
                 10, //maximum value
                 0.1); //step
-        JSpinner ratingSpinner = new JSpinner(ratingSpinnerValue);
+        final JSpinner ratingSpinner = new JSpinner(ratingSpinnerValue);
 
-        JTextField finishInput = new JTextField("", 27);
+        final JTextField finishInput = new JTextField("", 27);
 
         SpinnerModel minimalAgeSpinnerValue = new SpinnerNumberModel(0, //initial value
                 0, //minimum value
                 100000, //maximum value
                 1); //step
-        JSpinner minimalAgeSpinner = new JSpinner(minimalAgeSpinnerValue);
+        final JSpinner minimalAgeSpinner = new JSpinner(minimalAgeSpinnerValue);
 
         JComboBox producentsCombo = new JComboBox();
         producentsCombo.setPreferredSize(new Dimension(130, 20));
