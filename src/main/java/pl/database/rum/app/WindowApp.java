@@ -14,7 +14,7 @@ public class WindowApp extends JFrame {
         setLayout(new FlowLayout());
 
         JTabbedPane tabs = new JTabbedPane();
-        tabs.setBounds(0,0,1000,1000);
+        tabs.setBounds(0,0,1250,1000);
         tabs.add("Rums", new RumsTab());
         tabs.add("Producents", new ProducentsTab());
 

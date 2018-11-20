@@ -1,13 +1,23 @@
 package pl.database.rum.app;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import pl.database.rum.entities.Producent;
+import pl.database.rum.init.HibernateUtil;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 public class ProducentsTab extends JPanel {
 
     ProducentsTab() {
         super(new BorderLayout());
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        final Session session = sessionFactory.openSession();
 
         JLabel nameLabel, countryLabel, yearFoundingLabel;
 
@@ -46,6 +56,18 @@ public class ProducentsTab extends JPanel {
         panelForm.add(yearFoundingPanel);
         JButton addButton = new JButton("Add new producent");
         addButton.setPreferredSize(new Dimension(175, 40));
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                session.beginTransaction();
+                String name = nameInput.getText();
+                String country = countryInput.getText();
+                Integer yearFounding = (Integer) yearFoundingSpinner.getValue();
+
+                Producent exampleProducent = new Producent(name, country, yearFounding);
+                session.save(exampleProducent);
+                session.close();
+            }
+        });
         panelForm.add(addButton);
 
         add(new TableView("PRODUCTS"));
