@@ -17,9 +17,6 @@ public class App {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        java.util.List<Rum> rums = session.createCriteria(Rum.class).list();
-
-
         Producent exampleProducent = new Producent("Fiszcz Company", "poland", 2131);
         session.save(exampleProducent);
         session.getTransaction().commit();
