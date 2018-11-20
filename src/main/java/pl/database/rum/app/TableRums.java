@@ -107,10 +107,10 @@ class TableRums extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
         if (col == 8) {
             removeRumFromDatabase((Long)data[row][0]);
-            getAllRums();
+            this.data = getAllRums();
         } else
             data[row][col] = value;
-        fireTableCellUpdated(row, col);
+        fireTableDataChanged();
     }
 
     private void removeRumFromDatabase(Long id){
