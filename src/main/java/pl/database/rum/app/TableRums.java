@@ -1,8 +1,6 @@
 package pl.database.rum.app;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import pl.database.rum.entities.Producent;
 import pl.database.rum.entities.Rum;
@@ -107,14 +105,14 @@ class TableRums extends AbstractTableModel {
 
     public void setValueAt(Object value, int row, int col) {
         if (col == 8) {
-            removeRumFromDatabase((Long)data[row][0]);
+            removeRumFromDatabase((Long) data[row][0]);
             this.data = getAllRums();
         } else if (col == 9) {
-            updateRumById((Long)data[row][0], row);
+            updateRumById((Long) data[row][0], row);
         } else {
             data[row][col] = value;
-            fireTableCellUpdated(row, col);
         }
+        fireTableDataChanged();
     }
 
     private void removeRumFromDatabase(Long id){

@@ -5,10 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import pl.database.rum.entities.Producent;
-
-import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
-
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -22,11 +19,11 @@ class TableProducents extends AbstractTableModel {
             "Delete",
             "Update"};
 
-    List<Producent> producents;
+    private List<Producent> producents;
 
     Object[][] data;
 
-    public TableProducents(){
+    public TableProducents() {
         this.data = getAllProducents();
     }
 
@@ -34,34 +31,35 @@ class TableProducents extends AbstractTableModel {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Producent> producents = session.createCriteria(Producent.class).list();
+        producents = session.createCriteria(Producent.class).list();
         session.getTransaction().commit();
         session.close();
-        
+
         Object[][] producentArray = convertProducentListTo2DArray(producents);
         return producentArray;
     }
 
-    public Object[][] convertProducentListTo2DArray(List<Producent> producentList){
+    public Object[][] convertProducentListTo2DArray(List<Producent> producentList) {
         Object[][] rumArray = new Object[producentList.size()][10];
-        for (int i = 0; i < producentList.size(); i++){
+        for (int i = 0; i < producentList.size(); i++) {
             rumArray[i][0] = producentList.get(i).getId();
             rumArray[i][1] = producentList.get(i).getName() != null ? producentList.get(i).getName() : "";
-            rumArray[i][2] = producentList.get(i).getCountry()!= null ? producentList.get(i).getCountry() : 0;
-            rumArray[i][3] = producentList.get(i).getYearFounding()!= null ? producentList.get(i).getYearFounding() : "";
+            rumArray[i][2] = producentList.get(i).getCountry() != null ? producentList.get(i).getCountry() : 0;
+            rumArray[i][3] = producentList.get(i).getYearFounding() != null ? producentList.get(i).getYearFounding() : "";
             rumArray[i][4] = false;
             rumArray[i][5] = false;
         }
         return rumArray;
     }
-    
-    public List<Producent> getProducentById(long id){
+
+    public List<Producent> getProducentById(long id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Criteria crit = session.createCriteria(Producent.class);
         crit.add(Restrictions.eq("id", id));
         List<Producent> producents = crit.list();
+        session.close();
         return producents;
     }
 
@@ -96,8 +94,24 @@ class TableProducents extends AbstractTableModel {
     }
 
     public void setValueAt(Object value, int row, int col) {
+        if (col == 4) {
+            removeProducentFromDatabase((Long) data[row][0]);
+            this.data = getAllProducents();
+        } else
+            data[row][col] = value;
+        fireTableDataChanged();
+    }
 
-        data[row][col] = value;
-        fireTableCellUpdated(row, col);
+    private void removeProducentFromDatabase(Long id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        for (Producent producent : producents) {
+            if (producent.getId().equals(id)) {
+                session.delete(producent);
+            }
+        }
+        session.getTransaction().commit();
+        session.close();
     }
 }

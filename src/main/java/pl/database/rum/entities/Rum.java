@@ -51,5 +51,10 @@ public class Rum {
                 ", minimalAge=" + minimalAge +
                 ", producent=" + producent +
                 '}';
+
+    }
+
+    public void setID(long id){
+        this.id = id;
     }
 }
