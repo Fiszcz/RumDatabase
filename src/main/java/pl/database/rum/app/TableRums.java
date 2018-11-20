@@ -13,6 +13,7 @@ class TableRums extends AbstractTableModel {
 
     SessionFactory sessionFactory;
     Session session;
+    static TableRums instance = null;
 
     String[] columnNames = {"Id",
             "Name",
@@ -25,7 +26,7 @@ class TableRums extends AbstractTableModel {
             "Delete",
             "Update"};
 
-    Object[][] data;
+    public Object[][] data;
 
     List<Rum> rums;
 
@@ -33,6 +34,12 @@ class TableRums extends AbstractTableModel {
         sessionFactory = HibernateUtil.getSessionFactory();
         session = sessionFactory.openSession();
         this.data = getAllRums();
+    }
+
+    public static final TableRums getInstance(){
+        if (instance==null)
+            instance = new TableRums();
+        return instance;
     }
 
     public Object[][] getAllRums() {

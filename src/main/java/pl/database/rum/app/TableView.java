@@ -11,9 +11,9 @@ public class TableView extends JPanel {
 
         JTable table;
         if (typeOfTable == "RUMS")
-            table = new JTable(new TableRums());
+            table = new JTable(TableRums.getInstance());
         else
-            table = new JTable(new TableProducents());
+            table = new JTable(TableProducents.getInstance());
         table.setPreferredScrollableViewportSize(new Dimension(800, 500));
         table.setFillsViewportHeight(true);
 

@@ -116,6 +116,10 @@ public class RumsTab extends JPanel {
 
                 Rum rum = new Rum(name, percentage, rumTypeValue, rating, finisz, minimalAge, producent);
                 addNewRumToDatabase(rum);
+                TableRums tableRums = TableRums.getInstance();
+                tableRums.data = tableRums.getAllRums();
+                tableRums.fireTableDataChanged();
+
             }
         });
         panelForm.add(addButton);

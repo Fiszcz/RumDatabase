@@ -74,6 +74,9 @@ public class ProducentsTab extends JPanel {
                 Producent producent = new Producent(name, country, yearFounding);
 
                 addNewProducentToDatabase(producent);
+                TableProducents tableProducents = TableProducents.getInstance();
+                tableProducents.data = tableProducents.getAllProducents();
+                tableProducents.fireTableDataChanged();
             }
         });
         panelForm.add(addButton);
