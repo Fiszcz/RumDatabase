@@ -13,11 +13,14 @@ import java.util.Calendar;
 
 public class ProducentsTab extends JPanel {
 
+    SessionFactory sessionFactory;
+    Session session;
+
     ProducentsTab() {
         super(new BorderLayout());
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        final Session session = sessionFactory.openSession();
+        sessionFactory = HibernateUtil.getSessionFactory();
+        session = sessionFactory.openSession();
 
         JLabel nameLabel, countryLabel, yearFoundingLabel;
 
@@ -58,14 +61,13 @@ public class ProducentsTab extends JPanel {
         addButton.setPreferredSize(new Dimension(175, 40));
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                session.beginTransaction();
                 String name = nameInput.getText();
                 String country = countryInput.getText();
                 Integer yearFounding = (Integer) yearFoundingSpinner.getValue();
 
-                Producent exampleProducent = new Producent(name, country, yearFounding);
-                session.save(exampleProducent);
-                session.close();
+                Producent producent = new Producent(name, country, yearFounding);
+
+                addNewProducentToDatabase(producent);
             }
         });
         panelForm.add(addButton);
@@ -73,4 +75,11 @@ public class ProducentsTab extends JPanel {
         add(new TableView("PRODUCTS"));
         add(panelForm, BorderLayout.NORTH);
     }
+
+    private void addNewProducentToDatabase(Producent producent){
+        session.beginTransaction();
+        session.save(producent);
+        session.close();
+    }
+
 }
