@@ -59,6 +59,7 @@ class TableProducents extends AbstractTableModel {
         Criteria crit = session.createCriteria(Producent.class);
         crit.add(Restrictions.eq("id", id));
         List<Producent> producents = crit.list();
+        session.close();
         return producents;
     }
 

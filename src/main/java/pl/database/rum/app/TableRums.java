@@ -1,9 +1,8 @@
 package pl.database.rum.app;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
+import pl.database.rum.entities.Producent;
 import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
@@ -105,7 +104,43 @@ class TableRums extends AbstractTableModel {
     }
 
     public void setValueAt(Object value, int row, int col) {
-        if (col == 8) {
+//        System.out.println(data[row][0].getClass());
+        long id = Long.parseLong(String.valueOf(data[row][0]));
+        if (col == 9) {
+            Rum rum = getRumById(10).get(0);
+            Producent examleProducter = new Producent("Fiszczuv2", "POLSKA", 10100);
+
+            Rum newRum = new Rum("SIEMA", 413, "MOJTYP", 6.6, "MATOWY", 1000, examleProducter);
+            newRum.setID(id);
+            System.out.println(rum);
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(newRum);
+            session.getTransaction().commit();
+            session.close();
+//            Transaction tx =  session.beginTransaction();
+//            try {
+//                session.update(newRum);
+//                tx.commit();
+//            } catch (Exception e) {
+//                if (tx != null) tx.rollback();
+//                throw e;
+//            } finally {
+//                session.close();
+////            }
+
+            ////            Query query = session.createSQLQuery("UPDATE rums SET name = 'DUPA' WHERE id = 10");
+////            Query query = session.createQuery("UPDATE rums SET name = :name WHERE id = :id");
+////            query.setParameter("name", "wooodka");
+////            query.setParameter("id", 10);
+//            int result = query.executeUpdate();
+//            System.out.println("Rows affected: " + result);
+//            System.out.println(newRum);
+//            System.out.println("dupa");
+//            session.getTransaction().commit();
+        }
+        else if (col == 8) {
             removeRumFromDatabase((Long)data[row][0]);
             this.data = getAllRums();
         } else
