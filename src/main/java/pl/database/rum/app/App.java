@@ -15,7 +15,7 @@ public class App {
         session.beginTransaction();
 
 
-        Producent exampleProducent = new Producent();
+        Producent exampleProducent = new Producent("Fiszcz Company", "poland", 2131);
         session.save(exampleProducent);
         session.getTransaction().commit();
         session.close();
