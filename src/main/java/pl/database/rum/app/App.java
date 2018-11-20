@@ -2,13 +2,10 @@ package pl.database.rum.app;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import pl.database.rum.entities.Producent;
-import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
 import java.awt.*;
-import java.util.List;
 
 public class App {
 
