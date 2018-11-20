@@ -27,6 +27,8 @@ public class Rum {
     @ManyToOne
     private Producent producent;
 
+    public Rum() {}
+
     public Rum(String name, Integer alcoholPercentage, String rumType, Double rating, String finish, Integer minimalAge, Producent producent) {
         this.name = name;
         this.alcoholPercentage = alcoholPercentage;
@@ -35,5 +37,18 @@ public class Rum {
         this.finish = finish;
         this.minimalAge = minimalAge;
         this.producent = producent;
+    }
+
+    @Override
+    public String toString() {
+        return "Rum{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alcoholPercentage=" + alcoholPercentage +
+                ", rumType='" + rumType + '\'' +
+                ", rating=" + rating +
+                ", finish='" + finish + '\'' +
+                ", minimalAge=" + minimalAge +
+                '}';
     }
 }
