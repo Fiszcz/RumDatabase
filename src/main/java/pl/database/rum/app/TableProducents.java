@@ -10,7 +10,7 @@ import pl.database.rum.init.HibernateUtil;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-class TableProducents extends AbstractTableModel {
+public class TableProducents extends AbstractTableModel {
 
     String[] columnNames = {"Id",
             "Name",
@@ -122,9 +122,10 @@ class TableProducents extends AbstractTableModel {
         session.close();
     }
 
-    public static void addNewProducentToDatabase(Producent producent, Session session){
+    public static long addNewProducentToDatabase(Producent producent, Session session){
         session.beginTransaction();
-        session.save(producent);
+        long id = (Long)session.save(producent);
         session.close();
+        return id;
     }
 }
