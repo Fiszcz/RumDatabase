@@ -73,7 +73,7 @@ public class ProducentsTab extends JPanel {
 
                 Producent producent = new Producent(name, country, yearFounding);
 
-                addNewProducentToDatabase(producent);
+                TableProducents.addNewProducentToDatabase(producent, session);
                 TableProducents tableProducents = TableProducents.getInstance();
                 tableProducents.data = tableProducents.getAllProducents();
                 tableProducents.fireTableDataChanged();
@@ -85,10 +85,5 @@ public class ProducentsTab extends JPanel {
         add(panelForm, BorderLayout.NORTH);
     }
 
-    private void addNewProducentToDatabase(Producent producent){
-        session.beginTransaction();
-        session.save(producent);
-        session.close();
-    }
 
 }
