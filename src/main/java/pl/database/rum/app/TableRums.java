@@ -63,7 +63,7 @@ class TableRums extends AbstractTableModel {
             rumArray[i][4] = rumList.get(i).getFinish()!= null ? rumList.get(i).getFinish() : "";
             rumArray[i][5] = rumList.get(i).getRating()!= null ? rumList.get(i).getRating() : 0;
             rumArray[i][6] = rumList.get(i).getMinimalAge()!= null ? rumList.get(i).getMinimalAge() : 0;
-            rumArray[i][7] = rumList.get(i).getProducent()!= null ? rumList.get(i).getProducent() : 0;
+            rumArray[i][7] = rumList.get(i).getProducent()!= null ? rumList.get(i).getProducent().getName() : "";
             rumArray[i][8] = false;
             rumArray[i][9] = false;
         }
