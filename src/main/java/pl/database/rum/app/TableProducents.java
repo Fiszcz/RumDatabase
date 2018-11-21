@@ -109,7 +109,7 @@ public class TableProducents extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    private void removeProducentFromDatabase(Long id) {
+    public void removeProducentFromDatabase(Long id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
