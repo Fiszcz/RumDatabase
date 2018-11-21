@@ -5,13 +5,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import pl.database.rum.entities.Producent;
-import pl.database.rum.entities.Rum;
 import pl.database.rum.init.HibernateUtil;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-class TableProducents extends AbstractTableModel {
+public class TableProducents extends AbstractTableModel {
 
     String[] columnNames = {"Id",
             "Name",
@@ -105,9 +104,7 @@ class TableProducents extends AbstractTableModel {
         if (col == 4) {
             removeProducentFromDatabase((Long) data[row][0]);
             this.data = getAllProducents();
-        } else if (col == 5){
-            updateProdunectById((Long) data[row][0], row);
-        }else
+        } else
             data[row][col] = value;
         fireTableDataChanged();
     }
@@ -121,17 +118,6 @@ class TableProducents extends AbstractTableModel {
                 session.delete(producent);
             }
         }
-        session.getTransaction().commit();
-        session.close();
-    }
-
-    private void updateProdunectById(Long id, int row){
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Producent producent = new Producent(data[row][1].toString(), data[row][2].toString(), (Integer)data[row][3]);
-        producent.setId(id);
-        session.update(producent);
         session.getTransaction().commit();
         session.close();
     }

@@ -9,7 +9,7 @@ import pl.database.rum.init.HibernateUtil;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-class TableRums extends AbstractTableModel {
+public class TableRums extends AbstractTableModel {
 
     SessionFactory sessionFactory;
     Session session;
@@ -166,4 +166,9 @@ class TableRums extends AbstractTableModel {
         return null;
     }
 
+    public static void addNewRumToDatabase(Rum rum, Session session){
+        session.beginTransaction();
+        session.save(rum);
+        session.close();
+    }
 }
