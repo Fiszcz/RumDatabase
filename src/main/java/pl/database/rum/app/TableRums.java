@@ -132,7 +132,7 @@ public class TableRums extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    private void removeRumFromDatabase(Long id){
+    public void removeRumFromDatabase(Long id){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
