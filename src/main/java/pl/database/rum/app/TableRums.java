@@ -28,12 +28,22 @@ class TableRums extends AbstractTableModel {
 
     public Object[][] data;
 
+    List<Producent> producents;
     List<Rum> rums;
 
     public TableRums() {
         sessionFactory = HibernateUtil.getSessionFactory();
         session = sessionFactory.openSession();
+        getAllProducents();
         this.data = getAllRums();
+    }
+
+    private void getAllProducents() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        producents = session.createCriteria(Producent.class).list();
+        session.close();
     }
 
     public static final TableRums getInstance(){
@@ -140,11 +150,20 @@ class TableRums extends AbstractTableModel {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Rum rum = new Rum(data[row][1].toString(), (Integer)data[row][2], data[row][3].toString(),
-        (Double)data[row][5], data[row][4].toString(), (Integer)data[row][6], null);
+        (Double)data[row][5], data[row][4].toString(), (Integer)data[row][6], findProducent((String)data[row][7]));
         rum.setId(id);
         session.update(rum);
         session.getTransaction().commit();
         session.close();
+    }
+
+    private Producent findProducent(String name){
+        for(Producent producent : producents){
+            if(producent.getName().equals(name)){
+                return producent;
+            }
+        }
+        return null;
     }
 
 }
