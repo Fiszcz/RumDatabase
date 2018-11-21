@@ -52,7 +52,7 @@ public class RumsTab extends JPanel {
                 1); //step
         final JSpinner minimalAgeSpinner = new JSpinner(minimalAgeSpinnerValue);
 
-        JComboBox producentsCombo = new JComboBox();
+        final JComboBox producentsCombo = new JComboBox();
         producentsCombo.setPreferredSize(new Dimension(130, 20));
         for (Producent producent : producents){
             producentsCombo.addItem(producent.getName());
@@ -122,7 +122,7 @@ public class RumsTab extends JPanel {
                 Producent producent = findProducent((String)producentsCombo.getSelectedItem());
 
                 Rum rum = new Rum(name, percentage, rumTypeValue, rating, finisz, minimalAge, producent);
-                addNewRumToDatabase(rum);
+                TableRums.addNewRumToDatabase(rum, session);
                 TableRums tableRums = TableRums.getInstance();
                 tableRums.data = tableRums.getAllRums();
                 tableRums.fireTableDataChanged();
@@ -133,12 +133,6 @@ public class RumsTab extends JPanel {
 
         add(new TableView("RUMS"));
         add(panelForm, BorderLayout.NORTH);
-    }
-
-    private void addNewRumToDatabase(Rum rum){
-        session.beginTransaction();
-        session.save(rum);
-        session.close();
     }
 
     private void getAllProducents() {

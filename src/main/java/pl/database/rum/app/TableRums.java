@@ -166,4 +166,9 @@ class TableRums extends AbstractTableModel {
         return null;
     }
 
+    public static void addNewRumToDatabase(Rum rum, Session session){
+        session.beginTransaction();
+        session.save(rum);
+        session.close();
+    }
 }
