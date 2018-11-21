@@ -13,6 +13,7 @@ class TableRums extends AbstractTableModel {
 
     SessionFactory sessionFactory;
     Session session;
+    static TableRums instance = null;
 
     String[] columnNames = {"Id",
             "Name",
@@ -25,14 +26,30 @@ class TableRums extends AbstractTableModel {
             "Delete",
             "Update"};
 
-    Object[][] data;
+    public Object[][] data;
 
+    List<Producent> producents;
     List<Rum> rums;
 
     public TableRums() {
         sessionFactory = HibernateUtil.getSessionFactory();
         session = sessionFactory.openSession();
+        getAllProducents();
         this.data = getAllRums();
+    }
+
+    private void getAllProducents() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        producents = session.createCriteria(Producent.class).list();
+        session.close();
+    }
+
+    public static final TableRums getInstance(){
+        if (instance==null)
+            instance = new TableRums();
+        return instance;
     }
 
     public Object[][] getAllRums() {
@@ -56,7 +73,7 @@ class TableRums extends AbstractTableModel {
             rumArray[i][4] = rumList.get(i).getFinish()!= null ? rumList.get(i).getFinish() : "";
             rumArray[i][5] = rumList.get(i).getRating()!= null ? rumList.get(i).getRating() : 0;
             rumArray[i][6] = rumList.get(i).getMinimalAge()!= null ? rumList.get(i).getMinimalAge() : 0;
-            rumArray[i][7] = rumList.get(i).getProducent()!= null ? rumList.get(i).getProducent() : 0;
+            rumArray[i][7] = rumList.get(i).getProducent()!= null ? rumList.get(i).getProducent().getName() : "";
             rumArray[i][8] = false;
             rumArray[i][9] = false;
         }
@@ -133,11 +150,20 @@ class TableRums extends AbstractTableModel {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Rum rum = new Rum(data[row][1].toString(), (Integer)data[row][2], data[row][3].toString(),
-        (Double)data[row][5], data[row][4].toString(), (Integer)data[row][6], null);
+        (Double)data[row][5], data[row][4].toString(), (Integer)data[row][6], findProducent((String)data[row][7]));
         rum.setId(id);
         session.update(rum);
         session.getTransaction().commit();
         session.close();
+    }
+
+    private Producent findProducent(String name){
+        for(Producent producent : producents){
+            if(producent.getName().equals(name)){
+                return producent;
+            }
+        }
+        return null;
     }
 
 }

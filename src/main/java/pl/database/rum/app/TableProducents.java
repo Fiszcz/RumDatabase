@@ -21,11 +21,18 @@ class TableProducents extends AbstractTableModel {
             "Update"};
 
     private List<Producent> producents;
+    static TableProducents instance = null;
 
     Object[][] data;
 
     public TableProducents() {
         this.data = getAllProducents();
+    }
+
+    public static final TableProducents getInstance(){
+        if (instance==null)
+            instance = new TableProducents();
+        return instance;
     }
 
     public Object[][] getAllProducents() {

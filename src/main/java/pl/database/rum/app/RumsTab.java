@@ -10,14 +10,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class RumsTab extends JPanel {
 
     SessionFactory sessionFactory;
     Session session;
+    List<Producent> producents;
 
     RumsTab() {
         super(new BorderLayout());
+
+        getAllProducents();
 
         sessionFactory = HibernateUtil.getSessionFactory();
         session = sessionFactory.openSession();
@@ -50,6 +54,9 @@ public class RumsTab extends JPanel {
 
         JComboBox producentsCombo = new JComboBox();
         producentsCombo.setPreferredSize(new Dimension(130, 20));
+        for (Producent producent : producents){
+            producentsCombo.addItem(producent.getName());
+        }
 
         JPanel namePanel = new JPanel(new BorderLayout());
         namePanel.add(nameInput);
@@ -112,10 +119,14 @@ public class RumsTab extends JPanel {
                 Integer percentage = (Integer) alcoholPercentageSpinner.getValue();
                 Integer minimalAge = (Integer) minimalAgeSpinner.getValue();
                 Double rating = (Double) ratingSpinner.getValue();
-                Producent producent = new Producent("Elo", "Elo", 20);
+                Producent producent = findProducent((String)producentsCombo.getSelectedItem());
 
                 Rum rum = new Rum(name, percentage, rumTypeValue, rating, finisz, minimalAge, producent);
                 addNewRumToDatabase(rum);
+                TableRums tableRums = TableRums.getInstance();
+                tableRums.data = tableRums.getAllRums();
+                tableRums.fireTableDataChanged();
+
             }
         });
         panelForm.add(addButton);
@@ -128,6 +139,23 @@ public class RumsTab extends JPanel {
         session.beginTransaction();
         session.save(rum);
         session.close();
+    }
+
+    private void getAllProducents() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        producents = session.createCriteria(Producent.class).list();
+        session.close();
+    }
+
+    private Producent findProducent(String name){
+        for(Producent producent : producents){
+            if(producent.getName().equals(name)){
+                return producent;
+            }
+        }
+        return null;
     }
 
 }
