@@ -121,4 +121,11 @@ public class TableProducents extends AbstractTableModel {
         session.getTransaction().commit();
         session.close();
     }
+
+    public static long addNewProducentToDatabase(Producent producent, Session session){
+        session.beginTransaction();
+        long id = (Long)session.save(producent);
+        session.close();
+        return id;
+    }
 }
