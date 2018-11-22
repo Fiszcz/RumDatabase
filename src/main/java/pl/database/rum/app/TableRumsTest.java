@@ -38,6 +38,17 @@ public class TableRumsTest {
     }
 
     @Test
-    public void getRumById() {
+    public void updateRumById(){
+        TableRums tb = new TableRums();
+        Object[][] allRums = tb.getAllRums();
+        allRums[0][1]="siema";
+        System.out.print(allRums[0][0]);
+        
+        tb.updateRumById((Long) allRums[0][0],0);
+        tb= new TableRums();
+
+        allRums=tb.getAllRums();
+        Assert.assertEquals(allRums[0][1],"siema");
+
     }
 }

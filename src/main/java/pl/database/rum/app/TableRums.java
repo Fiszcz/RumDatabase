@@ -145,7 +145,7 @@ public class TableRums extends AbstractTableModel {
         session.close();
     }
 
-    private void updateRumById(Long id, int row){
+    public void updateRumById(Long id, int row){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
